@@ -1,6 +1,5 @@
 package br.com.william.androidgameengine;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.WindowManager;
 
@@ -16,19 +15,24 @@ public class MainActivity extends AppCompatActivity {
         if(Renderer.getSurfaceView() == null) {
             return;
         }
+        GameLoop.enableStart();
 
         super.setContentView(Renderer.getSurfaceView());
         addFlags();
 
-        GameLoop.start();
+        EngineWorld.setScene(new Scene_TEST());
     }
 
-
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GameLoop.start();
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
+        GameLoop.stop();
         if (Renderer.isRendererSet()) {
             Renderer.getSurfaceView().onPause();
         }
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         if (Renderer.isRendererSet()) {
             Renderer.getSurfaceView().onResume();
         }
+        GameLoop.enableStart();
     }
 
     private void addFlags() {
@@ -47,6 +52,6 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 }

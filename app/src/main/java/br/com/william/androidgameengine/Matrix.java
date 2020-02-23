@@ -9,7 +9,7 @@ import static br.com.william.androidgameengine.util.EngineCamera.getxCameraZoom;
 import static br.com.william.androidgameengine.util.EngineCamera.getyCameraAxis;
 import static br.com.william.androidgameengine.util.EngineCamera.getyCameraZoom;
 
-public class Matrices {
+public class Matrix {
 
     public static float[] modelMatrix = new float[16];
     public static float[] viewMatrix = new float[16];
@@ -70,7 +70,7 @@ public class Matrices {
         rotationMatrix[4] = (float) Math.sin(Math.toRadians(degrees));
         rotationMatrix[5] = (float) Math.cos(Math.toRadians(degrees));
         multiplyMM(modelMatrix, 0, rotationMatrix, 0, modelMatrix , 0);
-//        multiplyMM(modelViewMatrix, 0, modelMatrix, 0, viewMatrix, 0);
+        multiplyMM(modelViewMatrix, 0, modelMatrix, 0, viewMatrix, 0);
         multiplyMM(modelViewProjectionMatrix, 0, modelViewMatrix, 0, projectionMatrix, 0);
     }
 
@@ -82,7 +82,7 @@ public class Matrices {
         rotationMatrix[4] = (float) Math.sin(Math.toRadians(degrees));
         rotationMatrix[5] = (float) Math.cos(Math.toRadians(degrees));
         multiplyMM(viewMatrix, 0, rotationMatrix, 0, viewMatrix, 0);
-        multiplyMM(viewProjectionMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
-        multiplyMM(modelViewProjectionMatrix, 0, modelMatrix, 0, viewProjectionMatrix, 0);
+        multiplyMM(viewProjectionMatrix, 0, viewMatrix, 0, projectionMatrix, 0);
+        multiplyMM(modelViewProjectionMatrix, 0, viewProjectionMatrix, 0, modelMatrix, 0);
     }
 }

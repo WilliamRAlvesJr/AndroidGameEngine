@@ -5,8 +5,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import br.com.william.androidgameengine.data.VertexArray;
 import br.com.william.androidgameengine.programs.TextureShaderProgram;
 
-import static android.opengl.GLES20.GL_TRIANGLE_FAN;
-import static android.opengl.GLES20.glDrawArrays;
+import static android.opengl.GLES30.GL_TRIANGLE_FAN;
+import static android.opengl.GLES30.glDrawArrays;
 
 public class Table {
 

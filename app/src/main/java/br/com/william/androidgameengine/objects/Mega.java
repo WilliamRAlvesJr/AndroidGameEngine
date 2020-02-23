@@ -1,11 +1,12 @@
 package br.com.william.androidgameengine.objects;
 
+import br.com.william.androidgameengine.Animation;
+import br.com.william.androidgameengine.ImageResource;
 import br.com.william.androidgameengine.ShaderProgramsList;
 import br.com.william.androidgameengine.programs.TextureShaderProgram;
 
-import static br.com.william.androidgameengine.Matrices.modelViewProjectionMatrix;
-import static br.com.william.androidgameengine.Matrices.rotate;
-import static br.com.william.androidgameengine.Matrices.translate;
+import static br.com.william.androidgameengine.Matrix.modelViewProjectionMatrix;
+import static br.com.william.androidgameengine.Matrix.translate;
 
 public class Mega extends GameObject {
 
@@ -16,18 +17,30 @@ public class Mega extends GameObject {
     private float rotation = 0f;
 
     private float speed = 5f;
-    public int megaTexture;
+    public Animation[] animations;
 
     public Mega(float[] coordinates, int shaderProgramId) {
         super(coordinates, shaderProgramId);
-    }
 
+        animations = new Animation[1];
+        animations[0] = new Animation();
+
+        animations[0].frames = new int[20];
+        animations[0].fps = 15;
+
+        for (int i = 0; i < animations[0].frames.length; i++) {
+            animations[0].frames[i] = ImageResource.loadTexture("/res/drawable-v24/survivor_idle_rifle_" + String.valueOf(i).concat(".png"));
+        }
+    }
     public void render() {
+
+        animations[0].play();
+
         ShaderProgramsList.getShaderProgram(shaderProgramId).useProgram();
         translate(xAxis, yAxis, height, width);
-        rotate(rotation);
+//        rotate(rotation);
         ShaderProgramsList.getShaderProgram(shaderProgramId).useProgram();
-        ((TextureShaderProgram) ShaderProgramsList.getShaderProgram(shaderProgramId)).setUniforms(modelViewProjectionMatrix, megaTexture);
+        ((TextureShaderProgram) ShaderProgramsList.getShaderProgram(shaderProgramId)).setUniforms(modelViewProjectionMatrix, animations[0].getImage());
         bindData((TextureShaderProgram) ShaderProgramsList.getShaderProgram(shaderProgramId));
         draw();
     }

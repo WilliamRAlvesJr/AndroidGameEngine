@@ -13,11 +13,9 @@ public class GameLoop {
     private static int targetTime = 1000000000 / targetFPS;
 
     public static void start() {
+
         Thread thread = new Thread() {
             public void run() {
-
-                running = true;
-
                 startTime = System.nanoTime();
 
                 while (running) {
@@ -52,6 +50,14 @@ public class GameLoop {
         };
         thread.setName("GameLoop");
         thread.start();
+    }
+
+    public static void stop() { running = false; }
+
+    public static void enableStart() { running = true; }
+
+    public static boolean isRunning() {
+        return running;
     }
 
     public static float updateDelta() {

@@ -26,7 +26,9 @@ public class Renderer {
     }
 
     public static void render() {
-        surfaceView.requestRender();
+        if (surfaceView != null) {
+            surfaceView.requestRender();
+        }
     }
 
     public static EngineSurfaceView getSurfaceView() {
